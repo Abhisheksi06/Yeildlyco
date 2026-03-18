@@ -3,7 +3,8 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../ui
 import { Button } from '../ui/button';
 import { Input } from '../ui/input';
 import { Badge } from '../ui/badge';
-import { Bot, Send, Mic, Globe, MessageCircle } from 'lucide-react';
+import { Bot, Send, Mic, Globe, MessageCircle, AlertCircle } from 'lucide-react';
+import { getAIResponse, ChatMessage } from '../../services/openaiService';
 
 interface ChatBotProps {
   onInteraction?: () => void;
@@ -21,6 +22,7 @@ export function ChatBot({ onInteraction }: ChatBotProps) {
   const [newMessage, setNewMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [language, setLanguage] = useState('hi');
+  const [error, setError] = useState<string | null>(null);
 
   const quickQuestions = [
     { hindi: 'गेहूं के लिए कौन सी खाद अच्छी है?', english: 'Which fertilizer is good for wheat?' },
@@ -29,14 +31,7 @@ export function ChatBot({ onInteraction }: ChatBotProps) {
     { hindi: 'अच्छी उपज के लिए टिप्स दें', english: 'Give tips for good yield' },
   ];
 
-  const botResponses = [
-    'आपके गेहूं के लिए यूरिया और डीएपी का संतुलित उपयोग करें। मिट्टी जांच के आधार पर 120 किग्रा यूरिया प्रति एकड़ उपयोग करें।',
-    'कम बारिश में ड्रिप इरिगेशन का उपयोग करें। सुबह 6-8 बजे पानी दें। मल्चिंग से नमी बचाएं।',
-    'पत्तों का रंग, धब्बे, और पौधे की वृद्धि देखें। तुरंत कृषि विशेषज्ञ से संपर्क करें।',
-    'समय पर बुआई, उचित बीज दर, संतुलित खाद, और नियमित सिंचाई करें। मौसम की जानकारी रखें।'
-  ];
-
-  const handleSendMessage = () => {
+  const handleSendMessage = async () => {
     if (!newMessage.trim()) return;
 
     const userMessage = {
@@ -47,26 +42,50 @@ export function ChatBot({ onInteraction }: ChatBotProps) {
 
     setMessages(prev => [...prev, userMessage]);
     setIsLoading(true);
+    setError(null);
     onInteraction?.();
 
-    // Simulate bot response
-    setTimeout(() => {
-      const randomResponse = botResponses[Math.floor(Math.random() * botResponses.length)];
+    try {
+      // Convert message history to OpenAI format
+      const conversationHistory: ChatMessage[] = messages
+        .filter(msg => msg.type === 'bot' || msg.type === 'user')
+        .map(msg => ({
+          role: msg.type === 'bot' ? 'assistant' : 'user',
+          content: msg.message
+        }));
+
+      // Get AI response
+      const aiResponse = await getAIResponse(newMessage, conversationHistory);
+      
       const botMessage = {
         type: 'bot',
-        message: randomResponse,
-        translation: 'AI-generated farming advice based on your query',
+        message: aiResponse,
+        translation: language === 'en' ? 'Translated: ' + aiResponse.substring(0, 50) + '...' : undefined,
         time: new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})
       };
       setMessages(prev => [...prev, botMessage]);
+    } catch (err) {
+      const errorMessage = err instanceof Error ? err.message : 'Failed to get response from AI';
+      setError(errorMessage);
+      console.error('Chat error:', err);
+      
+      // Add error message to chat
+      const errorMsg = {
+        type: 'bot',
+        message: '❌ ' + (language === 'hi' ? 'क्षमा करें, मुझे जवाब देने में परेशानी हो रही है। कृपया बाद में फिर से कोशिश करें।' : 'Sorry, I encountered an error. Please try again later.'),
+        time: new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})
+      };
+      setMessages(prev => [...prev, errorMsg]);
+    } finally {
       setIsLoading(false);
-    }, 1500);
+    }
 
     setNewMessage('');
   };
 
   const handleQuickQuestion = (question: any) => {
-    setNewMessage(question.hindi);
+    const selectedQuestion = language === 'hi' ? question.hindi : question.english;
+    setNewMessage(selectedQuestion);
     onInteraction?.();
   };
 
@@ -88,6 +107,16 @@ export function ChatBot({ onInteraction }: ChatBotProps) {
         </CardHeader>
 
         <CardContent className="space-y-4">
+          {error && (
+            <div className="p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg flex items-start space-x-2">
+              <AlertCircle className="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5" />
+              <div>
+                <p className="text-sm text-red-800 dark:text-red-300 font-medium">Connection Error</p>
+                <p className="text-xs text-red-700 dark:text-red-400">{error}</p>
+              </div>
+            </div>
+          )}
+          
           {/* Language Toggle */}
           <div className="flex items-center space-x-2 pb-2 border-b">
             <span className="text-sm text-gray-600 dark:text-gray-400">Language:</span>
