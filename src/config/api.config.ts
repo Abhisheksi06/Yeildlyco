@@ -15,7 +15,7 @@
 // 3. Go to API keys section in your account
 // 4. Copy your API key and paste it below
 export const OPENWEATHER_CONFIG = {
-  API_KEY: '88bf0103781e4dc9e95102188d133865',
+  API_KEY: import.meta.env.VITE_OPENWEATHER_API_KEY || '',
   BASE_URL: 'https://api.openweathermap.org/data/2.5',
   
   // Default location (Delhi, India)
@@ -46,7 +46,7 @@ export const OPENWEATHER_CONFIG = {
 // 4. Go to "Credentials" and create an API key
 // 5. Copy your API key and paste it below
 export const GOOGLE_MAPS_CONFIG = {
-  API_KEY: 'YOUR_GOOGLE_MAPS_API_KEY_HERE',
+  API_KEY: import.meta.env.VITE_GOOGLE_MAPS_API_KEY || '',
   
   // Default map settings
   DEFAULT_CENTER: {
@@ -77,7 +77,7 @@ export const SUPABASE_CONFIG = {
 // NDVI (Normalized Difference Vegetation Index) for crop health monitoring
 // Common providers: Sentinel Hub, NASA EOSDIS, Planet Labs
 export const SATELLITE_API_CONFIG = {
-  API_KEY: 'fc9c4f860b8ad03909e4cf9a99ad04ed',
+  API_KEY: import.meta.env.VITE_SATELLITE_API_KEY || '',
   BASE_URL: 'https://services.sentinel-hub.com/api/v1',
   
   // NDVI calculation parameters
@@ -104,8 +104,8 @@ export const SATELLITE_API_CONFIG = {
 // Export a function to check if APIs are configured
 export const isApiConfigured = () => {
   return {
-    openweather: OPENWEATHER_CONFIG.API_KEY !== 'YOUR_OPENWEATHER_API_KEY_HERE',
-    googleMaps: GOOGLE_MAPS_CONFIG.API_KEY !== 'YOUR_GOOGLE_MAPS_API_KEY_HERE',
+    openweather: OPENWEATHER_CONFIG.API_KEY !== '',
+    googleMaps: GOOGLE_MAPS_CONFIG.API_KEY !== '',
     supabase: SUPABASE_CONFIG.URL !== '' && SUPABASE_CONFIG.ANON_KEY !== '',
     satellite: SATELLITE_API_CONFIG.API_KEY !== ''
   };
