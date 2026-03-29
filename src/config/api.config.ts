@@ -15,7 +15,7 @@
 // 3. Go to API keys section in your account
 // 4. Copy your API key and paste it below
 export const OPENWEATHER_CONFIG = {
-  API_KEY: '88bf0103781e4dc9e95102188d133865',
+  API_KEY: 'bd710ada3fa26e19268895c127b0e071',
   BASE_URL: 'https://api.openweathermap.org/data/2.5',
   
   // Default location (Delhi, India)

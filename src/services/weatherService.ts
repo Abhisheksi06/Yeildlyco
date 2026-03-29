@@ -1,7 +1,8 @@
 // Weather Service for real-time weather data
-// Note: Replace with your actual OpenWeatherMap API key
-const WEATHER_API_KEY = 'YOUR_OPENWEATHER_API_KEY';
-const WEATHER_BASE_URL = 'https://api.openweathermap.org/data/2.5';
+import { OPENWEATHER_CONFIG } from '../config/api.config';
+
+const WEATHER_API_KEY = OPENWEATHER_CONFIG.API_KEY;
+const WEATHER_BASE_URL = OPENWEATHER_CONFIG.BASE_URL;
 
 export interface WeatherData {
   location: string;

@@ -60,26 +60,24 @@ export default function App() {
   };
 
   const renderHome = () => (
-    <div className="min-h-screen bg-gradient-to-br from-green-50 via-emerald-50 to-lime-50 dark:from-green-950/30 dark:via-emerald-950/30 dark:to-lime-950/30 relative overflow-hidden" style={{ perspective: '1000px' }}>
+    <div className="min-h-screen bg-gradient-to-br from-green-50 via-emerald-50 to-lime-50 dark:from-green-950/30 dark:via-emerald-950/30 dark:to-lime-950/30 relative overflow-hidden perspective-3d">
       {/* Simplified Background Elements with 3D depth */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none" style={{ transformStyle: 'preserve-3d' }}>
+      <div className="absolute inset-0 overflow-hidden pointer-events-none preserve-3d">
         <motion.div
-          className="absolute -top-40 -right-40 w-80 h-80 bg-gradient-to-br from-green-400/20 to-emerald-400/20 rounded-full blur-3xl"
+          className="absolute -top-40 -right-40 w-80 h-80 bg-gradient-to-br from-green-400/20 to-emerald-400/20 rounded-full blur-3xl preserve-3d"
           animate={{ 
             rotate: 360,
             z: [0, 50, 0]
           }}
           transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-          style={{ transformStyle: 'preserve-3d' }}
         />
         <motion.div
-          className="absolute -bottom-40 -left-40 w-80 h-80 bg-gradient-to-br from-lime-400/20 to-yellow-400/20 rounded-full blur-3xl"
+          className="absolute -bottom-40 -left-40 w-80 h-80 bg-gradient-to-br from-lime-400/20 to-yellow-400/20 rounded-full blur-3xl preserve-3d"
           animate={{ 
             rotate: -360,
             z: [0, -50, 0]
           }}
           transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
-          style={{ transformStyle: 'preserve-3d' }}
         />
       </div>
 
@@ -348,6 +346,7 @@ export default function App() {
                 <select 
                   value={language} 
                   onChange={(e) => setLanguage(e.target.value)}
+                  aria-label="Select language"
                   className="bg-transparent text-sm focus:outline-none font-medium"
                 >
                   {Object.entries(languages).map(([code, lang]) => (
@@ -406,15 +405,14 @@ export default function App() {
       </motion.div>
 
       {/* Quick Access Grid */}
-      <motion.div 
-        className="px-6 mb-8"
+      <motion.div
+        className="px-6 mb-8 preserve-3d"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 1.0, duration: 0.6 }}
-        style={{ transformStyle: 'preserve-3d' }}
       >
         <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-6">Quick Access</h3>
-        <div className="grid grid-cols-2 gap-4" style={{ perspective: '1000px' }}>
+        <div className="grid grid-cols-2 gap-4 perspective-3d">
           {[
             { icon: Wheat, title: "Crop Predictions", subtitle: "AI-powered forecasts", gradient: "from-green-500 to-emerald-600", action: () => setCurrentView('farmer') },
             { icon: BarChart3, title: "Farm Analytics", subtitle: "Yield insights", gradient: "from-emerald-500 to-lime-600", action: () => setCurrentView('admin') },
@@ -460,14 +458,13 @@ export default function App() {
 
       {/* Analysis Tools */}
       <motion.div 
-        className="px-6 mb-8"
+        className="px-6 preserve-3d"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 1.2, duration: 0.6 }}
-        style={{ transformStyle: 'preserve-3d' }}
       >
         <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-6">Analysis Tools</h3>
-        <div className="grid grid-cols-2 gap-4" style={{ perspective: '1000px' }}>
+        <div className="grid grid-cols-2 gap-4 perspective-3d">
           {[
             { icon: Sprout, title: "Crop Health", subtitle: "NDVI monitoring", gradient: "from-green-500 to-emerald-600", action: () => setCurrentView('vegetation') },
             { icon: AlertCircle, title: "Pest Control", subtitle: "Early warnings", gradient: "from-red-500 to-orange-600", action: () => setCurrentView('pest') },
@@ -605,31 +602,76 @@ export default function App() {
   );
 
   return (
-    <div className="min-h-screen bg-background">
-      {currentView === 'home' && renderHome()}
-      {currentView === 'farmer' && <FarmerDashboard userPoints={userPoints} setUserPoints={setUserPoints} />}
-      {currentView === 'admin' && <AdminDashboard />}
-      {currentView === 'profile' && <ProfileManager userType={userType} setUserType={setUserType} userPoints={userPoints} userLevel={userLevel} />}
-      {currentView === 'help' && <HelpSupport />}
-      {currentView === 'updates' && <UpdatesNews />}
-      {currentView === 'vegetation' && <VegetationAnalysis />}
-      {currentView === 'pest' && <PestMonitoring />}
-      {currentView === 'yield-map' && <YieldMapping />}
-      {currentView === 'simulation' && <YieldSimulation />}
-      
-      {/* Home Button for Non-Home Views */}
-      {currentView !== 'home' && (
-        <div className="fixed top-4 right-4 z-50">
-          <Button
-            variant="outline"
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 flex items-center justify-center p-4">
+      {/* Mobile Phone Frame Container */}
+      <div className="mobile-phone-frame mobile-container bg-black rounded-3xl shadow-2xl overflow-hidden border-[14px] border-gray-900 mx-auto">
+        {/* Notch */}
+        <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-40 h-6 bg-black rounded-b-2xl z-50" />
+        
+        {/* Screen Content */}
+        <div className="w-full h-full overflow-y-auto bg-background">
+          {currentView === 'home' && renderHome()}
+          {currentView === 'farmer' && <FarmerDashboard userPoints={userPoints} setUserPoints={setUserPoints} />}
+          {currentView === 'admin' && <AdminDashboard />}
+          {currentView === 'profile' && <ProfileManager userType={userType} setUserType={setUserType} userPoints={userPoints} userLevel={userLevel} />}
+          {currentView === 'help' && <HelpSupport />}
+          {currentView === 'updates' && <UpdatesNews />}
+          {currentView === 'vegetation' && <VegetationAnalysis />}
+          {currentView === 'pest' && <PestMonitoring />}
+          {currentView === 'yield-map' && <YieldMapping />}
+          {currentView === 'simulation' && <YieldSimulation />}
+          
+          {/* Home Button for Non-Home Views */}
+          {currentView !== 'home' && (
+            <div className="absolute top-4 right-4 z-50">
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => setCurrentView('home')}
+                className="bg-white/90 dark:bg-gray-900/90 backdrop-blur-sm"
+              >
+                🏠 Home
+              </Button>
+            </div>
+          )}
+        </div>
+        
+        {/* Safe Area - Navigation Buttons at Bottom */}
+        <div className="absolute bottom-0 left-0 right-0 bg-white/10 backdrop-blur-sm border-t border-white/20 px-4 py-2 flex justify-center items-center gap-2">
+          <Button 
+            variant={currentView === 'home' ? 'default' : 'ghost'} 
             size="sm"
             onClick={() => setCurrentView('home')}
-            className="bg-white/90 dark:bg-gray-900/90 backdrop-blur-sm"
+            className="flex-1 rounded-lg text-xs"
           >
-            🏠 Home
+            🏠
+          </Button>
+          <Button 
+            variant={currentView === 'farmer' ? 'default' : 'ghost'} 
+            size="sm"
+            onClick={() => setCurrentView('farmer')}
+            className="flex-1 rounded-lg text-xs"
+          >
+            👨‍🌾
+          </Button>
+          <Button 
+            variant={currentView === 'admin' ? 'default' : 'ghost'} 
+            size="sm"
+            onClick={() => setCurrentView('admin')}
+            className="flex-1 rounded-lg text-xs"
+          >
+            📊
+          </Button>
+          <Button 
+            variant={currentView === 'help' ? 'default' : 'ghost'} 
+            size="sm"
+            onClick={() => setCurrentView('help')}
+            className="flex-1 rounded-lg text-xs"
+          >
+            ❓
           </Button>
         </div>
-      )}
+      </div>
     </div>
   );
 }
