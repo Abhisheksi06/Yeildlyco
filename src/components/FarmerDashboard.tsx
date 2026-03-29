@@ -122,7 +122,7 @@ export function FarmerDashboard({ userPoints, setUserPoints }: FarmerDashboardPr
       </motion.div>
 
       {/* Quick Actions Grid */}
-      <div className="grid grid-cols-2 gap-4" style={{ perspective: '1200px' }}>
+      <div className="grid grid-cols-2 gap-4 perspective-3d">
         {features.map((feature, index) => (
           <motion.div
             key={feature.id}
