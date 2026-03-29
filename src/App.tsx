@@ -60,123 +60,65 @@ export default function App() {
   };
 
   const renderHome = () => (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-emerald-50 to-teal-50 dark:from-slate-950 dark:via-slate-900 dark:to-teal-950 relative overflow-hidden perspective-3d">
-      {/* Premium Animated Background with multi-layer orbs */}
+    <div className="min-h-screen bg-gradient-to-br from-green-50 via-emerald-50 to-lime-50 dark:from-green-950/30 dark:via-emerald-950/30 dark:to-lime-950/30 relative overflow-hidden perspective-3d">
+      {/* Simplified Background Elements with 3D depth */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none preserve-3d">
-        {/* Top right gradient orb */}
         <motion.div
-          className="absolute -top-52 -right-52 w-96 h-96 bg-gradient-to-br from-emerald-300/15 via-teal-300/10 to-cyan-300/5 rounded-full blur-3xl"
+          className="absolute -top-40 -right-40 w-80 h-80 bg-gradient-to-br from-green-400/20 to-emerald-400/20 rounded-full blur-3xl preserve-3d"
           animate={{ 
             rotate: 360,
-            z: [0, 80, 0],
-            scale: [1, 1.1, 1]
+            z: [0, 50, 0]
           }}
-          transition={{ duration: 25, repeat: Infinity, ease: "easeInOut" }}
+          transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
         />
-        {/* Bottom left gradient orb */}
         <motion.div
-          className="absolute -bottom-52 -left-52 w-96 h-96 bg-gradient-to-tr from-teal-300/15 via-emerald-300/10 to-green-300/5 rounded-full blur-3xl"
+          className="absolute -bottom-40 -left-40 w-80 h-80 bg-gradient-to-br from-lime-400/20 to-yellow-400/20 rounded-full blur-3xl preserve-3d"
           animate={{ 
             rotate: -360,
-            z: [0, -80, 0],
-            scale: [1, 1.15, 1]
+            z: [0, -50, 0]
           }}
-          transition={{ duration: 28, repeat: Infinity, ease: "easeInOut" }}
-        />
-        {/* Center accent orb */}
-        <motion.div
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-72 h-72 bg-gradient-to-r from-emerald-200/5 to-teal-200/5 rounded-full blur-3xl"
-          animate={{ 
-            scale: [1, 1.2, 1],
-            opacity: [0.3, 0.6, 0.3]
-          }}
-          transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
+          transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
         />
       </div>
 
-      {/* Premium Header with professional branding */}
+      {/* Header with 3D lift effect */}
       <motion.div 
-        className="bg-white/80 dark:bg-slate-900/80 backdrop-blur-2xl border-b border-emerald-200/30 dark:border-emerald-800/30 sticky top-0 z-50 shadow-lg shadow-emerald-500/5"
-        initial={{ opacity: 0, y: -30 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, ease: "easeOut" }}
+        className="bg-white/70 dark:bg-gray-900/70 backdrop-blur-xl border-b border-white/20 dark:border-gray-800/20 sticky top-0 z-50"
+        initial={{ opacity: 0, y: -20, rotateX: -15 }}
+        animate={{ opacity: 1, y: 0, rotateX: 0 }}
+        transition={{ duration: 0.6 }}
+        whileHover={{ y: -2, boxShadow: '0 20px 60px rgba(0,0,0,0.1)' }}
+        style={{ transformStyle: 'preserve-3d' }}
       >
-        <div className="px-6 py-5">
+        <div className="px-6 py-4">
           <div className="flex items-center justify-between">
-            {/* Premium Logo */}
-            <motion.div 
-              className="flex items-center space-x-3"
-              whileHover={{ scale: 1.05 }}
-              transition={{ type: "spring", stiffness: 300 }}
-            >
-              <motion.div 
-                className="relative w-14 h-14 bg-gradient-to-br from-emerald-500 via-teal-500 to-cyan-600 rounded-2xl flex items-center justify-center shadow-xl shadow-emerald-500/30"
-                animate={{ 
-                  boxShadow: [
-                    '0 0 20px rgba(5, 150, 105, 0.3)',
-                    '0 0 40px rgba(5, 150, 105, 0.5)',
-                    '0 0 20px rgba(5, 150, 105, 0.3)'
-                  ]
-                }}
-                transition={{ duration: 3, repeat: Infinity }}
-              >
-                {/* Premium Agricultural SVG Logo */}
-                <svg className="w-8 h-8 text-white" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M50 10 Q70 30 60 50 Q50 60 40 50 Q30 30 50 10" fill="currentColor" opacity="0.9"/>
-                  <path d="M30 50 Q20 60 15 75 Q30 85 50 85 Q70 85 85 75 Q80 60 70 50" fill="currentColor" opacity="0.7"/>
-                  <circle cx="50" cy="50" r="8" fill="white" opacity="0.6"/>
-                </svg>
-              </motion.div>
+            <div className="flex items-center space-x-4">
+              <div className="w-12 h-12 bg-gradient-to-br from-green-500 via-emerald-500 to-lime-500 rounded-2xl flex items-center justify-center shadow-lg">
+                <Sprout className="w-7 h-7 text-white" />
+              </div>
               <div>
-                <h1 className="text-2xl font-bold bg-gradient-to-r from-emerald-600 via-teal-600 to-cyan-700 bg-clip-text text-transparent">
+                <h1 className="text-2xl font-bold bg-gradient-to-r from-green-600 via-emerald-600 to-lime-600 bg-clip-text text-transparent">
                   Yieldly
                 </h1>
-                <p className="text-xs text-gray-500 dark:text-gray-400 font-medium">Precision Farming Platform</p>
               </div>
-            </motion.div>
-
-            {/* Controls */}
-            <div className="flex items-center space-x-2">
-              <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.95 }}>
-                <Button 
-                  variant="ghost" 
-                  size="sm" 
-                  onClick={() => setIsDarkMode(!isDarkMode)} 
-                  className="rounded-xl hover:bg-emerald-100 dark:hover:bg-emerald-900/30 transition-colors"
-                >
-                  {isDarkMode ? <Sun className="w-5 h-5 text-yellow-500" /> : <Moon className="w-5 h-5 text-slate-600" />}
-                </Button>
-              </motion.div>
-
-              <motion.div className="relative" whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.95 }}>
-                <Button 
-                  variant="ghost" 
-                  size="sm" 
-                  className="rounded-xl hover:bg-emerald-100 dark:hover:bg-emerald-900/30 transition-colors"
-                >
-                  <Bell className="w-5 h-5 text-slate-600 dark:text-slate-300" />
+            </div>
+            <div className="flex items-center space-x-3">
+              <Button variant="ghost" size="sm" onClick={() => setIsDarkMode(!isDarkMode)} className="rounded-xl">
+                {isDarkMode ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
+              </Button>
+              <div className="relative">
+                <Button variant="ghost" size="sm" className="rounded-xl">
+                  <Bell className="w-5 h-5" />
                   {notifications > 0 && (
-                    <motion.div 
-                      className="absolute -top-1 -right-1 w-5 h-5 bg-gradient-to-r from-red-500 to-pink-500 text-white rounded-full flex items-center justify-center text-xs font-bold shadow-lg"
-                      animate={{ scale: [0.8, 1.1, 0.8] }}
-                      transition={{ duration: 2, repeat: Infinity }}
-                    >
+                    <div className="absolute -top-1 -right-1 w-5 h-5 bg-gradient-to-r from-red-500 to-pink-500 text-white rounded-full flex items-center justify-center text-xs">
                       {notifications}
-                    </motion.div>
+                    </div>
                   )}
                 </Button>
-              </motion.div>
-
-              <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.95 }}>
-                <Button 
-                  variant="ghost" 
-                  size="sm" 
-                  onClick={() => setCurrentView('profile')} 
-                  className="rounded-xl hover:bg-emerald-100 dark:hover:bg-emerald-900/30 transition-colors"
-                >
-                  <User className="w-5 h-5 text-slate-600 dark:text-slate-300" />
-                </Button>
-              </motion.div>
+              </div>
+              <Button variant="ghost" size="sm" onClick={() => setCurrentView('profile')} className="rounded-xl">
+                <User className="w-5 h-5" />
+              </Button>
             </div>
           </div>
         </div>
