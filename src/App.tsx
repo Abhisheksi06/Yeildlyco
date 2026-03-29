@@ -602,76 +602,31 @@ export default function App() {
   );
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 flex items-center justify-center p-4">
-      {/* Mobile Phone Frame Container */}
-      <div className="mobile-phone-frame mobile-container bg-black rounded-3xl shadow-2xl overflow-hidden border-[14px] border-gray-900 mx-auto">
-        {/* Notch */}
-        <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-40 h-6 bg-black rounded-b-2xl z-50" />
-        
-        {/* Screen Content */}
-        <div className="w-full h-full overflow-y-auto bg-background">
-          {currentView === 'home' && renderHome()}
-          {currentView === 'farmer' && <FarmerDashboard userPoints={userPoints} setUserPoints={setUserPoints} />}
-          {currentView === 'admin' && <AdminDashboard />}
-          {currentView === 'profile' && <ProfileManager userType={userType} setUserType={setUserType} userPoints={userPoints} userLevel={userLevel} />}
-          {currentView === 'help' && <HelpSupport />}
-          {currentView === 'updates' && <UpdatesNews />}
-          {currentView === 'vegetation' && <VegetationAnalysis />}
-          {currentView === 'pest' && <PestMonitoring />}
-          {currentView === 'yield-map' && <YieldMapping />}
-          {currentView === 'simulation' && <YieldSimulation />}
-          
-          {/* Home Button for Non-Home Views */}
-          {currentView !== 'home' && (
-            <div className="absolute top-4 right-4 z-50">
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => setCurrentView('home')}
-                className="bg-white/90 dark:bg-gray-900/90 backdrop-blur-sm"
-              >
-                🏠 Home
-              </Button>
-            </div>
-          )}
-        </div>
-        
-        {/* Safe Area - Navigation Buttons at Bottom */}
-        <div className="absolute bottom-0 left-0 right-0 bg-white/10 backdrop-blur-sm border-t border-white/20 px-4 py-2 flex justify-center items-center gap-2">
-          <Button 
-            variant={currentView === 'home' ? 'default' : 'ghost'} 
+    <div className="min-h-screen bg-background">
+      {currentView === 'home' && renderHome()}
+      {currentView === 'farmer' && <FarmerDashboard userPoints={userPoints} setUserPoints={setUserPoints} />}
+      {currentView === 'admin' && <AdminDashboard />}
+      {currentView === 'profile' && <ProfileManager userType={userType} setUserType={setUserType} userPoints={userPoints} userLevel={userLevel} />}
+      {currentView === 'help' && <HelpSupport />}
+      {currentView === 'updates' && <UpdatesNews />}
+      {currentView === 'vegetation' && <VegetationAnalysis />}
+      {currentView === 'pest' && <PestMonitoring />}
+      {currentView === 'yield-map' && <YieldMapping />}
+      {currentView === 'simulation' && <YieldSimulation />}
+      
+      {/* Home Button for Non-Home Views */}
+      {currentView !== 'home' && (
+        <div className="fixed top-4 right-4 z-50">
+          <Button
+            variant="outline"
             size="sm"
             onClick={() => setCurrentView('home')}
-            className="flex-1 rounded-lg text-xs"
+            className="bg-white/90 dark:bg-gray-900/90 backdrop-blur-sm"
           >
-            🏠
-          </Button>
-          <Button 
-            variant={currentView === 'farmer' ? 'default' : 'ghost'} 
-            size="sm"
-            onClick={() => setCurrentView('farmer')}
-            className="flex-1 rounded-lg text-xs"
-          >
-            👨‍🌾
-          </Button>
-          <Button 
-            variant={currentView === 'admin' ? 'default' : 'ghost'} 
-            size="sm"
-            onClick={() => setCurrentView('admin')}
-            className="flex-1 rounded-lg text-xs"
-          >
-            📊
-          </Button>
-          <Button 
-            variant={currentView === 'help' ? 'default' : 'ghost'} 
-            size="sm"
-            onClick={() => setCurrentView('help')}
-            className="flex-1 rounded-lg text-xs"
-          >
-            ❓
+            🏠 Home
           </Button>
         </div>
-      </div>
+      )}
     </div>
   );
 }
